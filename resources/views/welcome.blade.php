@@ -3,8 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        
+        <title>{{ config('app.name', 'PharmaTrack') }}</title>
+         <link rel="icon" href="{{ asset('icon.png') }}" type="image/png">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -14,7 +15,7 @@
 
     </head>
     <body>
-        <div id="app" class="h-full w-full">
+        <div id="app" class="h-full w-full bg-[#101c22]">
             @vite('resources/js/app.js')
         </div>
     </body>

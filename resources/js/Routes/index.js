@@ -1,12 +1,19 @@
 import { createRouter, createWebHistory} from 'vue-router';
 
 import Home from '../pages/Home.vue';
+import Login from '../pages/Login.vue';
 
 const routes = [
     {
-        path: '/',
+        path: '/home',
         name: 'home',
-        component: Home
+        component: Home,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/',
+        name: 'login',
+        component: Login
     }
 ]
 
@@ -17,6 +24,20 @@ const router = createRouter({
     scrollBehavior() {
         return { top: 0 }
     }
+});
+
+router.beforeEach(async (to, form, next) => {
+    const token = localStorage.getItem('token');
+
+    if (to.matched.some(record => record.meta.requiresAuth) && !token) {
+        return next({ name: 'login' });
+    }
+
+    if (to.name === 'login' && token) {
+        return next({ name: 'home' });
+    }
+
+    next();
 })
 
 export default router;

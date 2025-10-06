@@ -52,10 +52,12 @@
                     <span class="group-hover:text-[#1193d4]">Configuración</span>
                 </li>
             </ul>
-            <div class="flex items-center gap-x-3 text-gray-400 poppins-medium cursor-pointer hover:bg-[#1193d4]/10 p-5 rounded-lg group">
-                <IconHelpCircle stroke={2} class="text-gray-400 text-xl group-hover:text-[#1193d4]" />
-                <span class="group-hover:text-[#1193d4]">Ayuda</span>
-            </div>
+            <button 
+                @click="openAlert"
+                class="flex items-center gap-x-3 text-gray-400 poppins-medium cursor-pointer hover:bg-[#1193d4]/10 p-5 rounded-lg group">
+                <IconLogout stroke={2} class="text-gray-400 text-xl group-hover:text-[#1193d4]" />
+                <span class="group-hover:text-[#1193d4]">Cerrar sesion</span>
+            </button>
          </div>
     </div>
 
@@ -66,23 +68,29 @@
       class="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
     ></div>
   </div>
+
+  <AlertDialog v-if="showAlertConfirm" :onConfirm="logout" :show="true" :onCancel="closeAlert" @close="closeAlert" />
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import AlertDialog from './AlertDialog.vue';
+import { useRouter } from 'vue-router';
 import {
     IconLayoutDashboard,
     IconTemperatureSun,
     IconBellExclamation,
     IconFileDescription,
     IconSettings,
-    IconHelpCircle,
+    IconLogout,
     IconMenu2, // Icono de hamburguesa
     IconX // Icono de cerrar (opcional, para el botón de hamburguesa)
 }
 from '@tabler/icons-vue';
 
 const isMenuOpen = ref(false);
+const showAlertConfirm = ref(false);
+const router = useRouter();
 
 const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value;
@@ -91,4 +99,17 @@ const toggleMenu = () => {
 const closeMenu = () => {
     isMenuOpen.value = false;
 };
+
+const logout = () => {
+  localStorage.removeItem('token');
+  router.push({ name: 'login' })
+}
+
+const closeAlert = () => {
+  showAlertConfirm.value = false;
+}
+
+const openAlert = () => {
+  showAlertConfirm.value = true;
+}
 </script>
