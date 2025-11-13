@@ -16,7 +16,7 @@
     <!-- Menú Lateral / Overlay -->
     <div
       :class="{
-        'flex flex-col w-80vh min-h-screen h-auto bg-[#101c22] border-r border-gray-700 transition-transform duration-300 ease-in-out': true,
+        'flex flex-col w-80vh min-h-screen h-full bg-[#101c22] border-r border-gray-700 transition-transform duration-300 ease-in-out': true,
         'fixed inset-y-0 left-0 z-50 transform translate-x-0': isMenuOpen, // Menu abierto en mobile
         'fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0': !isMenuOpen, // Menu cerrado en mobile, abierto en desktop
         'md:relative md:flex md:w-80 md:min-h-screen md:h-auto': true // Estilos de sidebar en desktop
@@ -31,25 +31,13 @@
          <!-- Body del Sidebar (ítems del menú) -->
          <div class="flex flex-col justify-between w-full h-full p-6">
             <ul>
-                <li class="flex items-center gap-x-3 text-gray-400 poppins-medium cursor-pointer hover:bg-[#1193d4]/10 p-5 rounded-lg group">
+                <li @click="changeSection('dashboard')" class="flex items-center gap-x-3 text-gray-400 poppins-medium cursor-pointer hover:bg-[#1193d4]/10 p-5 rounded-lg group">
                     <IconLayoutDashboard stroke={2} class="text-gray-400 text-xl group-hover:text-[#1193d4]" />
                     <span class="group-hover:text-[#1193d4]">Dashboard</span>
                 </li>
-                <li class="flex items-center gap-x-3 text-gray-400 poppins-medium cursor-pointer hover:bg-[#1193d4]/10 p-5 rounded-lg group">
+                <li @click="changeSection('sensores')" class="flex items-center gap-x-3 text-gray-400 poppins-medium cursor-pointer hover:bg-[#1193d4]/10 p-5 rounded-lg group">
                     <IconTemperatureSun  stroke={2} class="text-gray-400 text-xl group-hover:text-[#1193d4]" />
                     <span class="group-hover:text-[#1193d4]">Sensores</span>
-                </li>
-                <li class="flex items-center gap-x-3 text-gray-400 poppins-medium cursor-pointer hover:bg-[#1193d4]/10 p-5 rounded-lg group">
-                    <IconBellExclamation stroke={2} class="text-gray-400 text-xl group-hover:text-[#1193d4]" />
-                    <span class="group-hover:text-[#1193d4]">Alertas</span>
-                </li>
-                <li class="flex items-center gap-x-3 text-gray-400 poppins-medium cursor-pointer hover:bg-[#1193d4]/10 p-5 rounded-lg group">
-                    <IconFileDescription stroke={2} class="text-gray-400 text-xl group-hover:text-[#1193d4]" />
-                    <span class="group-hover:text-[#1193d4]">Reportes</span>
-                </li>
-                <li class="flex items-center gap-x-3 text-gray-400 poppins-medium cursor-pointer hover:bg-[#1193d4]/10 p-5 rounded-lg group">
-                    <IconSettings stroke={2} class="text-gray-400 text-xl group-hover:text-[#1193d4]" />
-                    <span class="group-hover:text-[#1193d4]">Configuración</span>
                 </li>
             </ul>
             <button 
@@ -79,7 +67,6 @@ import { useRouter } from 'vue-router';
 import {
     IconLayoutDashboard,
     IconTemperatureSun,
-    IconBellExclamation,
     IconFileDescription,
     IconSettings,
     IconLogout,
@@ -112,4 +99,11 @@ const closeAlert = () => {
 const openAlert = () => {
   showAlertConfirm.value = true;
 }
+
+const emit = defineEmits(['sectionChanged']);
+
+const changeSection = (section) => {
+    emit('sectionChanged', section);
+}
+
 </script>

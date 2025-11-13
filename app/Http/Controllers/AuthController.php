@@ -49,4 +49,12 @@ class AuthController extends Controller
             ]);
         }
     }
+
+    public function verifyToken() : JsonResponse
+    {
+        return response()->json([
+            'status' => 'success',
+            'message' => 'token valido'
+        ], 200);
+    }
 }
